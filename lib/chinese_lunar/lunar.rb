@@ -62,7 +62,7 @@ module ChineseLunar
       month = 0
       (0..23).each do |i|
         day = get_term(@date.year, i)
-        month ++ if i % 2 == 0
+        month += 1 if i % 2 == 0
         res[format_date(mont - 1, day)] = @@solar_term[i]
       end
       res
