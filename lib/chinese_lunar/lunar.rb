@@ -245,7 +245,7 @@ module ChineseLunar
       Time.at(msecs / 1000).utc.day
     end
 
-    def format_date(m, d)
+    def format_date(month, day)
       month += 1
       month  = month < 10 ? '0' + month : month
       day    = day   < 10 ? '0' + day    : day
