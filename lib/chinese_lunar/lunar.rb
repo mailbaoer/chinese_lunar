@@ -247,8 +247,8 @@ module ChineseLunar
 
     def format_date(month, day)
       month += 1
-      month  = month < 10 ? '0' + month : month
-      day    = day   < 10 ? '0' + day    : day
+      month  = month < 10 ? '0' + month.to_s : month.to_s
+      day    = day   < 10 ? '0' + day.to_s   : day.to_s
 
       'd' + month + day
     end
