@@ -44,7 +44,7 @@ module ChineseLunar
     def lunar_date_in_chinese() 
       lunar_date  = convert(@date.year, @date.month, @date.day)
       solar_year  = cyclical_year(lunar_date[0]) + "年"
-      solar_month = [lunar_date[6] == 1 ? '闰' : '', @@nstr[lunar_date[1]], "月 "].join()
+      solar_month = [lunar_date[6] == 1 ? '闰' : '', @@nstr[lunar_date[1]], "月"].join()
       solar_day   = get_day_in_chinese(lunar_date[2])
       [solar_year, solar_month, solar_day]
     end
