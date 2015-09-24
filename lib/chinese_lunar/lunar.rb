@@ -109,12 +109,12 @@ module ChineseLunar
       lunar_leap_month = lunar_leap_year(@date.year)
 
       # 除夕
-      if lunar_date[1] = lunar_month_days.size - 1 && lunar_date[2] == lunar_month_days[lunar_month_days.size - 1]
+      if lunar_date[1] == lunar_month_days.size - 1 && lunar_date[2] == lunar_month_days[lunar_month_days.size - 1]
         lunar_festival = @@lunar_festival['d0100']
       elsif lunar_leap_month > 0 && lunar_date[1] > lunar_leap_month
         lunar_festival = @@lunar_festival[format_date(lunar_date[1], lunar_date[2].to_i)]
       else
-        lunar_festival = @@lunar_festival[format_date(lunar_date[1] + 1, lunar_date[2].to_i)]
+        lunar_festival = @@lunar_festival[format_date(lunar_date[1] - 1, lunar_date[2].to_i)]
       end
 
       lunar_festival
@@ -310,7 +310,6 @@ module ChineseLunar
       zen_month = year_data[1]
       zen_day   = year_data[2]
       between   = days_between_solar(year, zen_month, zen_day, year, month, day)
-
       if between == 0
         [year, 1, 1]
       else
@@ -348,10 +347,9 @@ module ChineseLunar
       leap_month  = year_data[0]
       month_data  = year_data[3].to_s(2)
       month_arr   = month_data.split('');
-
       # 还原数据至16位，少于16位的前面补0，二进制的前部0被忽略
       (0..(16 - month_arr.size - 1)).each do |i|
-        month_arr = ['0'] + month_arr
+        month_arr = ['0'] +  month_arr
       end
 
       length      = leap_month ? 13 : 12
@@ -367,6 +365,7 @@ module ChineseLunar
           month_days.push(30)
         end
       end
+
       {
         :year_days  => year_days,
         :month_days => month_days
