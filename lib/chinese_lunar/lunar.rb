@@ -112,9 +112,9 @@ module ChineseLunar
       if lunar_date[1] = lunar_month_days.size - 1 && lunar_date[2] == lunar_month_days[lunar_month_days.size - 1]
         lunar_festival = @@lunar_festival['d0100']
       elsif lunar_leap_month > 0 && lunar_date[1] > lunar_leap_month
-        lunar_festival = @@lunar_festival[format_date(lunar_date[1], unar_date[2])]
+        lunar_festival = @@lunar_festival[format_date(lunar_date[1], lunar_date[2].to_i)]
       else
-        lunar_festival = @@lunar_festival[format_date(lunar_date[1] + 1, unar_date[2])]
+        lunar_festival = @@lunar_festival[format_date(lunar_date[1] + 1, lunar_date[2].to_i)]
       end
 
       lunar_festival
@@ -340,7 +340,7 @@ module ChineseLunar
         end
       end
 
-      [year, month, end_day - temp_days + 1]
+      [year, month + 1, end_day - temp_days + 1]
     end
 
     def days_in_lunar_year(year)
@@ -350,16 +350,16 @@ module ChineseLunar
       month_arr   = month_data.split('');
 
       # 还原数据至16位，少于16位的前面补0，二进制的前部0被忽略
-      (0..(16 - month_arr.size)).each do |i|
-        month_arr = ['0'].push month_arr
+      (0..(16 - month_arr.size - 1)).each do |i|
+        month_arr = ['0'] + month_arr
       end
 
       length      = leap_month ? 13 : 12
       year_days   = 0
       month_days  = []
       
-      (0..length).each do |i|
-        if month_arr[i] == 0
+      (0..(length - 1)).each do |i|
+        if month_arr[i] == '0'
           year_days += 29;
           month_days.push(29)
         else
