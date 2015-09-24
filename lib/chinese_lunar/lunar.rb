@@ -86,8 +86,8 @@ module ChineseLunar
     end
 
     # Get the Lundar date in 'xxxx-xx-xx' fromat
-    def lunar_date() 
-      l = convert(@date.year, @date.month, @date.day)
+    def lunar_date(year, month, day) 
+      l = convert(year, month, day)
       l[0].to_s + "-" + l[1].to_s + "-" + (/^\d+/.match(l[2].to_s)).to_s
     end
 
@@ -106,11 +106,15 @@ module ChineseLunar
       lunar_festival = ''
       lunar_date = lunar_by_between(@date.year, @date.month, @date.day)
       lunar_month_days = days_in_lunar_year(@date.year)[:month_days]
+      lunar_leap_month = lunar_leap_year(@data.year)
 
       # 除夕
       if lunar_date[1] = lunar_month_days.size - 1 && lunar_date[2] == lunar_month_days[lunar_month_days.size - 1]
-        lunar_festival = @@lunar_festival['d0100'];
-        
+        lunar_festival = @@lunar_festival['d0100']
+      elsif lunar_leap_month > 0 && lunar_date[1] > lunar_leap_month
+        lunar_festival = @@lunar_festival[format_date(lunar_date[1], unar_date[2])]
+      else
+        lunar_festival = @@lunar_festival[format_date(lunar_date[1] + 1, unar_date[2])]
       end
 
       lunar_festival
@@ -367,6 +371,11 @@ module ChineseLunar
         :year_days  => year_days,
         :month_days => month_days
       }
+    end
+
+    def lunar_leap_year(year)
+      year_data = @@lunar_info[year - 1890]
+      year_data[0]
     end
 
   end
