@@ -131,7 +131,7 @@ module ChineseLunar
     end
 
     def solar_festival()
-      @@solar_festival[format_date(@date.month, @date.day)]
+      @@solar_festival[format_date(@date.month - 1, @date.day)]
     end
 
   private
