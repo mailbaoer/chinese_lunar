@@ -77,7 +77,17 @@ module ChineseLunar
       solar_year  = cyclical_year(lunar_date[0]) + "年"
       solar_month = [lunar_date[6] == 1 ? '闰' : '', @@nstr[lunar_date[1]], "月"].join()
       solar_day   = get_day_in_chinese(lunar_date[2])
-      [solar_year, solar_month, solar_day]
+
+      {
+        :year  => @date.year,
+        :month => @date.month,
+        :day   => @date.day,
+        :solar_year  => solar_year,
+        :solar_month => solar_month,
+        :solar_day   => solar_day,
+        :lunar_festival => lunar_festival,
+        :solar_festival => solar_festival
+      }
     end
 
     def lunar_date_year_in_chinese()
@@ -118,6 +128,10 @@ module ChineseLunar
       end
 
       lunar_festival
+    end
+
+    def solar_festival()
+      @@solar_festvial[format_date(@date.month, @date.day)]
     end
 
   private
