@@ -82,6 +82,7 @@ module ChineseLunar
         :year  => @date.year,
         :month => @date.month,
         :day   => @date.day,
+        :wday  => @date.wday,
         :solar_year  => solar_year,
         :solar_month => solar_month,
         :solar_day   => solar_day,
