@@ -114,15 +114,15 @@ module ChineseLunar
     end
 
     def lunar_festival()
-      lunar_festival = ''
       lunar_date = lunar_by_between(@date.year, @date.month, @date.day)
       lunar_month_days = days_in_lunar_year(@date.year)[:month_days]
       lunar_leap_month = lunar_leap_year(@date.year)
 
       # 除夕
-      if lunar_date[1] == lunar_month_days.size - 1 && lunar_date[2] == lunar_month_days[lunar_month_days.size - 1]
-        lunar_festival = @@lunar_festival['d0100']
-      elsif lunar_leap_month > 0 && lunar_date[1] > lunar_leap_month
+      #if lunar_date[1] == lunar_month_days.size - 1 && lunar_date[2] == lunar_month_days[lunar_month_days.size - 1]
+      #  lunar_festival = @@lunar_festival['d0100']
+      #els
+      if lunar_leap_month > 0 && lunar_date[1] > lunar_leap_month
         lunar_festival = @@lunar_festival[format_date(lunar_date[1], lunar_date[2].to_i)]
       else
         lunar_festival = @@lunar_festival[format_date(lunar_date[1] - 1, lunar_date[2].to_i)]
