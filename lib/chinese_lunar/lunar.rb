@@ -1,5 +1,4 @@
 # encoding: utf-8
-# Modify from http://my.oschina.net/tomsu/blog/700
 
 module ChineseLunar
   class Lunar
@@ -47,12 +46,38 @@ module ChineseLunar
       0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252
     ]
 
-    @@nstr       = ["", "正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"]
-    @@gan        = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
-    @@zhi        = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
-    @@nnimals    = ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"]
-    @@solar_term = ['小寒', '大寒', '立春', '雨水', '惊蛰', '春分', '清明', '谷雨', '立夏', '小满', '芒种', '夏至', '小暑', '大暑', '立秋', '处暑', '白露', '秋分', '寒露', '霜降', '立冬', '小雪', '大雪','冬至']
-    @@term_info  = [0,21208,42467,63836,85337,107014,128867,150921,173149,195551, 218072,240693,263343,285989,308563,331033,353350,375494,397447,419210,440795,462224,483532,504758];
+    @@nstr = [
+      '',   '正', '二', '三', '四', '五', '六',
+      '七', '八', '九', '十', '十一', '十二',
+    ]
+    @@gan = [
+      '甲', '乙', '丙', '丁', '戊',
+      '己', '庚', '辛', '壬', '癸',
+    ]
+
+    @@zhi = [
+      '子', '丑', '寅', '卯', '辰', '巳',
+      '午', '未', '申', '酉', '戌', '亥',
+    ]
+
+    @@nnimals = [
+      '鼠', '牛', '虎', '兔', '龙', '蛇',
+      '马', '羊', '猴', '鸡', '狗', '猪',
+    ]
+
+    @@solar_term = [
+      '小寒', '大寒', '立春', '雨水', '惊蛰', '春分',
+      '清明', '谷雨', '立夏', '小满', '芒种', '夏至',
+      '小暑', '大暑', '立秋', '处暑', '白露', '秋分',
+      '寒露', '霜降', '立冬', '小雪', '大雪', '冬至',
+    ]
+
+    @@term_info  = [
+           0,  21208,  42467,  63836,  85337, 107014,
+      128867, 150921, 173149, 195551, 218072, 240693,
+      263343, 285989, 308563, 331033, 353350, 375494,
+      397447, 419210, 440795, 462224, 483532, 504758,
+    ]
 
     @@solar_festival = {
     'd0101' => '元旦节',
@@ -83,77 +108,68 @@ module ChineseLunar
     'd0100' => '除夕'
   }
 
-  @@lunar_new_info = [[2,1,21,22184],[0,2,9,21936],[6,1,30,9656],[0,2,17,9584],[0,2,6,21168],[5,1,26,43344],[0,2,13,59728],[0,2,2,27296],[3,1,22,44368],[0,2,10,43856],[8,1,30,19304],[0,2,19,19168],[0,2,8,42352],[5,1,29,21096],[0,2,16,53856],[0,2,4,55632],[4,1,25,27304],[0,2,13,22176],[0,2,2,39632],[2,1,22,19176],[0,2,10,19168],[6,1,30,42200],[0,2,18,42192],[0,2,6,53840],[5,1,26,54568],[0,2,14,46400],[0,2,3,54944],[2,1,23,38608],[0,2,11,38320],[7,2,1,18872],[0,2,20,18800],[0,2,8,42160],[5,1,28,45656],[0,2,16,27216],[0,2,5,27968],[4,1,24,44456],[0,2,13,11104],[0,2,2,38256],[2,1,23,18808],[0,2,10,18800],[6,1,30,25776],[0,2,17,54432],[0,2,6,59984],[5,1,26,27976],[0,2,14,23248],[0,2,4,11104],[3,1,24,37744],[0,2,11,37600],[7,1,31,51560],[0,2,19,51536],[0,2,8,54432],[6,1,27,55888],[0,2,15,46416],[0,2,5,22176],[4,1,25,43736],[0,2,13,9680],[0,2,2,37584],[2,1,22,51544],[0,2,10,43344],[7,1,29,46248],[0,2,17,27808],[0,2,6,46416],[5,1,27,21928],[0,2,14,19872],[0,2,3,42416],[3,1,24,21176],[0,2,12,21168],[8,1,31,43344],[0,2,18,59728],[0,2,8,27296],[6,1,28,44368],[0,2,15,43856],[0,2,5,19296],[4,1,25,42352],[0,2,13,42352],[0,2,2,21088],[3,1,21,59696],[0,2,9,55632],[7,1,30,23208],[0,2,17,22176],[0,2,6,38608],[5,1,27,19176],[0,2,15,19152],[0,2,3,42192],[4,1,23,53864],[0,2,11,53840],[8,1,31,54568],[0,2,18,46400],[0,2,7,46752],[6,1,28,38608],[0,2,16,38320],[0,2,5,18864],[4,1,25,42168],[0,2,13,42160],[10,2,2,45656],[0,2,20,27216],[0,2,9,27968],[6,1,29,44448],[0,2,17,43872],[0,2,6,38256],[5,1,27,18808],[0,2,15,18800],[0,2,4,25776],[3,1,23,27216],[0,2,10,59984],[8,1,31,27432],[0,2,19,23232],[0,2,7,43872],[5,1,28,37736],[0,2,16,37600],[0,2,5,51552],[4,1,24,54440],[0,2,12,54432],[0,2,1,55888],[2,1,22,23208],[0,2,9,22176],[7,1,29,43736],[0,2,18,9680],[0,2,7,37584],[5,1,26,51544],[0,2,14,43344],[0,2,3,46240],[4,1,23,46416],[0,2,10,44368],[9,1,31,21928],[0,2,19,19360],[0,2,8,42416],[6,1,28,21176],[0,2,16,21168],[0,2,5,43312],[4,1,25,29864],[0,2,12,27296],[0,2,1,44368],[2,1,22,19880],[0,2,10,19296],[6,1,29,42352],[0,2,17,42208],[0,2,6,53856],[5,1,26,59696],[0,2,13,54576],[0,2,3,23200],[3,1,23,27472],[0,2,11,38608],[11,1,31,19176],[0,2,19,19152],[0,2,8,42192],[6,1,28,53848],[0,2,15,53840],[0,2,4,54560],[5,1,24,55968],[0,2,12,46496],[0,2,1,22224],[2,1,22,19160],[0,2,10,18864],[7,1,30,42168],[0,2,17,42160],[0,2,6,43600],[5,1,26,46376],[0,2,14,27936],[0,2,2,44448],[3,1,23,21936],[0,2,11,37744],[8,2,1,18808],[0,2,19,18800],[0,2,8,25776],[6,1,28,27216],[0,2,15,59984],[0,2,4,27424],[4,1,24,43872],[0,2,12,43744],[0,2,2,37600],[3,1,21,51568],[0,2,9,51552],[7,1,29,54440],[0,2,17,54432],[0,2,5,55888],[5,1,26,23208],[0,2,14,22176],[0,2,3,42704],[4,1,23,21224],[0,2,11,21200],[8,1,31,43352],[0,2,19,43344],[0,2,7,46240],[6,1,27,46416],[0,2,15,44368],[0,2,5,21920],[4,1,24,42448],[0,2,12,42416],[0,2,2,21168],[3,1,22,43320],[0,2,9,26928],[7,1,29,29336],[0,2,17,27296],[0,2,6,44368],[5,1,26,19880],[0,2,14,19296],[0,2,3,42352],[4,1,24,21104],[0,2,10,53856],[8,1,30,59696],[0,2,18,54560],[0,2,7,55968],[6,1,27,27472],[0,2,15,22224],[0,2,5,19168],[4,1,25,42216],[0,2,12,42192],[0,2,1,53584],[2,1,21,55592],[0,2,9,54560]];
+  attr_reader :Date
 
-    attr_reader :Date
+  def initialize(date = Date.today)
+    @date = date
+  end
 
-    def initialize(date = Date.today)
-      @date = date
+  # Get Lundar date in Chinese text
+  def lunar_date_in_chinese()
+    lunar_date  =  yang_to_nong(@date.year, @date.month, @date.day)
+    solar_year  = cyclical_year(lunar_date[0]) + '年'
+    solar_month = [lunar_date[6] == 1 ? '闰' : '', @@nstr[lunar_date[1]], '月'].join()
+    solar_day   = get_day_in_chinese(lunar_date[2])
+
+    {
+      :year  => @date.year,
+      :month => @date.month,
+      :day   => @date.day,
+      :wday  => @date.wday,
+      :solar_year  => solar_year,
+      :solar_month => solar_month,
+      :solar_day   => solar_day,
+      :lunar_festival => lunar_festival,
+      :solar_festival => solar_festival
+    }
+  end
+
+  # Get the Lundar date in 'xxxx-xx-xx' fromat
+  def lunar_date(year, month, day)
+    l =  yang_to_nong(year, month, day)
+    l[0].to_s + '-' + l[1].to_s + '-' + (/^\d+/.match(l[2].to_s)).to_s
+  end
+
+  def lunar_year_term()
+    res = {}
+    month = 0
+    (0..23).each do |i|
+      day = get_term(@date.year, i)
+      month += 1 if i % 2 == 0
+      res[format_date(month - 1, day)] = @@solar_term[i]
+    end
+    res
+  end
+
+  def lunar_festival()
+    lunar_date = lunar_date(@date.year, @date.month, @date.day).split('-').map(&:to_i)
+    lunar_leap_month = leap_month(@date.year)
+    # 除夕
+    #if lunar_date[1] == lunar_month_days.size - 1 && lunar_date[2] == lunar_month_days[lunar_month_days.size - 1]
+    #  lunar_festival = @@lunar_festival['d0100']
+    #els
+    if lunar_date[0] == @date.year && lunar_leap_month > 0 && lunar_date[1] > lunar_leap_month
+      lunar_festival = @@lunar_festival[format_date(lunar_date[1] - 1, lunar_date[2].to_i)]
+    else
+      lunar_festival = @@lunar_festival[format_date(lunar_date[1], lunar_date[2].to_i)]
     end
 
-    # Get Lundar date in Chinese text
-    def lunar_date_in_chinese()
-      lunar_date  =  yang_to_nong(@date.year, @date.month, @date.day)
-      solar_year  = cyclical_year(lunar_date[0]) + "年"
-      solar_month = [lunar_date[6] == 1 ? '闰' : '', @@nstr[lunar_date[1]], "月"].join()
-      solar_day   = get_day_in_chinese(lunar_date[2])
+    lunar_festival
+  end
 
-      {
-        :year  => @date.year,
-        :month => @date.month,
-        :day   => @date.day,
-        :wday  => @date.wday,
-        :solar_year  => solar_year,
-        :solar_month => solar_month,
-        :solar_day   => solar_day,
-        :lunar_festival => lunar_festival,
-        :solar_festival => solar_festival
-      }
-    end
-
-    def lunar_date_year_in_chinese()
-      l =  yang_to_nong(@date.year, @date.month, @date.day)
-      cyclical_year(l[0])
-    end
-
-    # Get the Lundar date in 'xxxx-xx-xx' fromat
-    def lunar_date(year, month, day)
-      l =  yang_to_nong(year, month, day)
-      l[0].to_s + "-" + l[1].to_s + "-" + (/^\d+/.match(l[2].to_s)).to_s
-    end
-
-    def lunar_year_term()
-      res = {}
-      month = 0
-      (0..23).each do |i|
-        day = get_term(@date.year, i)
-        month += 1 if i % 2 == 0
-        res[format_date(month - 1, day)] = @@solar_term[i]
-      end
-      res
-    end
-
-    def lunar_festival()
-      lunar_date = lunar_by_between(@date.year, @date.month, @date.day)
-      #lunar_month_days = days_in_lunar_year(@date.year)[:month_days]
-      lunar_leap_month = lunar_leap_year(@date.year)
-
-      # 除夕
-      #if lunar_date[1] == lunar_month_days.size - 1 && lunar_date[2] == lunar_month_days[lunar_month_days.size - 1]
-      #  lunar_festival = @@lunar_festival['d0100']
-      #els
-      if lunar_leap_month > 0 && lunar_date[1] > lunar_leap_month
-        lunar_festival = @@lunar_festival[format_date(lunar_date[1] - 1, lunar_date[2].to_i)]
-      else
-        lunar_festival = @@lunar_festival[format_date(lunar_date[1], lunar_date[2].to_i)]
-      end
-
-      lunar_festival
-    end
-
-    def solar_festival()
-      @@solar_festival[format_date(@date.month, @date.day)]
-    end
+  def solar_festival()
+    @@solar_festival[format_date(@date.month, @date.day)]
+  end
 
   private
 
@@ -168,7 +184,7 @@ module ChineseLunar
 
     # 传出y年m月d日对应的农历.
     # year0 .month1 .day2 .yearCyl3 .monCyl4 .dayCyl5 .isLeap6
-    def convert(y, m, d)
+    def yang_to_nong(y, m, d)
       nongDate = []
       i = 0
       temp = 0
@@ -218,7 +234,7 @@ module ChineseLunar
           offset -= temp
           if (nongDate[6] == 0)
             nongDate[4] += 1
-        end
+          end
 
         i += 1
       end
@@ -246,41 +262,41 @@ module ChineseLunar
     end
 
     def get_day_in_chinese(day)
-      a = ""
+      a = ''
       if (day == 10)
-        return "初十"
+        return '初十'
       elsif (day == 20)
-        return "二十"
+        return '二十'
       elsif (day == 30)
-        return "三十"
+        return '三十'
       end
 
       two = ((day) / 10).to_i()
 
       if (two == 0)
-        a = "初"
+        a = '初'
       elsif (two == 1)
-        a = "十"
+        a = '十'
       elsif (two == 2)
-        a = "廿"
+        a = '廿'
       elsif (two == 3)
-        a = "三"
+        a = '三'
       else
-        a = "ERROR"
+        a = 'ERROR'
       end
 
       one =  (day % 10)
 
       case one
-        when 1 then a += "一"
-        when 2 then a += "二"
-        when 3 then a += "三"
-        when 4 then a += "四"
-        when 5 then a += "五"
-        when 6 then a += "六"
-        when 7 then a += "七"
-        when 8 then a += "八"
-        when 9 then a += "九"
+        when 1 then a += '一'
+        when 2 then a += '二'
+        when 3 then a += '三'
+        when 4 then a += '四'
+        when 5 then a += '五'
+        when 6 then a += '六'
+        when 7 then a += '七'
+        when 8 then a += '八'
+        when 9 then a += '九'
       end
 
       return a
@@ -339,77 +355,11 @@ module ChineseLunar
       'd' + month + day
     end
 
-    def lunar_by_between(year, month, day)
-      year_data = @@lunar_new_info[year - 1890]
-      zen_month = year_data[1]
-      zen_day   = year_data[2]
-      between   = days_between_solar(year, zen_month, zen_day, year, month, day)
-      if between == 0
-        [year, 1, 1]
-      else
-        lunar_year = between > 0 ? year : year - 1;
-        lunar_date_by_between(lunar_year, between)
-      end
-    end
-
-    # 计算两个公历之间的天数
-    def days_between_solar(by, bm, bd, ny, nm, nd)
-      Date.new(ny, nm, nd) - Date.new(by, bm, bd)
-    end
-
-    # 通过间隔天数查询农历日期
-    def lunar_date_by_between(year, between)
-      lunar_year_days = days_in_lunar_year(year)
-      end_day = between > 0 ? between : lunar_year_days[:year_days] - between.abs
-      month_days = lunar_year_days[:month_days]
-      temp_days = 0
-      month = 0
-      (0..month_days.size).each do |i|
-        temp_days += month_days[i]
-        if temp_days > end_day
-          month = i
-          temp_days = temp_days - month_days[i]
-          break
-        end
-      end
-
-      [year, month + 1, end_day - temp_days + 1]
-    end
-
     def days_in_lunar_year(year)
-      year_data   = @@lunar_new_info[year - 1890]
-      leap_month  = year_data[0]
-      month_data  = year_data[3].to_s(2)
-      month_arr   = month_data.split('');
-      # 还原数据至16位，少于16位的前面补0，二进制的前部0被忽略
-      (0..(16 - month_arr.size - 1)).each do |i|
-        month_arr = ['0'] +  month_arr
-      end
-
-      length      = leap_month ? 13 : 12
-      year_days   = 0
-      month_days  = []
-
-      (0..(length - 1)).each do |i|
-        if month_arr[i] == '0'
-          year_days += 29;
-          month_days.push(29)
-        else
-          year_days += 30
-          month_days.push(30)
-        end
-      end
-
       {
-        :year_days  => year_days,
-        :month_days => month_days
+        :year_days  => days_in_lunar_date(year),
+        :month_days => (1..12).map {|month| monthDays(year, month)}
       }
     end
-
-    def lunar_leap_year(year)
-      year_data = @@lunar_new_info[year - 1890]
-      year_data[0]
-    end
-
   end
 end
