@@ -158,9 +158,9 @@ module ChineseLunar
     #if lunar_date[1] == lunar_month_days.size - 1 && lunar_date[2] == lunar_month_days[lunar_month_days.size - 1]
     #  lunar_festival = @@lunar_festival['d0100']
     #els
-    if lunar_date[0] == @date.year && lunar_leap_month > 0 && lunar_date[1] > lunar_leap_month
-      lunar_festival = @@lunar_festival[format_date(lunar_date[1] - 1, lunar_date[2].to_i)]
-    else
+    lunar_date = yang_to_nong(@date.year, @date.month, @date.day)
+
+    unless lunar_date[6] == 1 && lunar_date[1] == lunar_leap_month
       lunar_festival = @@lunar_festival[format_date(lunar_date[1], lunar_date[2].to_i)]
     end
 
