@@ -115,10 +115,10 @@ module ChineseLunar
   end
 
   # Get Lundar date in Chinese text
-  def lunar_date_in_chinese()
+  def lunar_date_in_chinese
     lunar_date  =  yang_to_nong(@date.year, @date.month, @date.day)
     solar_year  = cyclical_year(lunar_date[0]) + '年'
-    solar_month = [lunar_date[6] == 1 ? '闰' : '', @@nstr[lunar_date[1]], '月'].join()
+    solar_month = [lunar_date[6] == 1 ? '闰' : '', @@nstr[lunar_date[1]], '月'].join
     solar_day   = get_day_in_chinese(lunar_date[2])
 
     {
@@ -129,6 +129,7 @@ module ChineseLunar
       :solar_year  => solar_year,
       :solar_month => solar_month,
       :solar_day   => solar_day,
+      :lunar_term  => lunar_term,
       :lunar_festival => lunar_festival,
       :solar_festival => solar_festival
     }
@@ -140,34 +141,28 @@ module ChineseLunar
     l[0].to_s + '-' + l[1].to_s + '-' + (/^\d+/.match(l[2].to_s)).to_s
   end
 
-  def lunar_year_term()
-    res = {}
-    month = 0
-    (0..23).each do |i|
-      day = get_term(@date.year, i)
-      month += 1 if i % 2 == 0
-      res[format_date(month - 1, day)] = @@solar_term[i]
-    end
-    res
+  def lunar_term
+    index = (0..23).find {|i| @date == get_term(@date.year, i) }
+    index ? @@solar_term[index] : nil
   end
 
-  def lunar_festival()
-    lunar_date = lunar_date(@date.year, @date.month, @date.day).split('-').map(&:to_i)
-    lunar_leap_month = leap_month(@date.year)
-    # 除夕
-    #if lunar_date[1] == lunar_month_days.size - 1 && lunar_date[2] == lunar_month_days[lunar_month_days.size - 1]
-    #  lunar_festival = @@lunar_festival['d0100']
-    #els
+  def lunar_festival
     lunar_date = yang_to_nong(@date.year, @date.month, @date.day)
-
-    unless lunar_date[6] == 1 && lunar_date[1] == lunar_leap_month
-      lunar_festival = @@lunar_festival[format_date(lunar_date[1], lunar_date[2].to_i)]
+    lunar_leap_month = leap_month(@date.year)
+    lunar_month_days = days_in_lunar_year(@date.year)[:month_days]
+    # 除夕
+    if lunar_date[1] == lunar_month_days.size && lunar_date[2] == lunar_month_days[lunar_month_days.size - 1]
+      lunar_festival = @@lunar_festival['d0100']
+    else
+      unless lunar_date[6] == 1 && lunar_date[1] == lunar_leap_month
+        lunar_festival = @@lunar_festival[format_date(lunar_date[1], lunar_date[2].to_i)]
+      end
     end
 
     lunar_festival
   end
 
-  def solar_festival()
+  def solar_festival
     @@solar_festival[format_date(@date.month, @date.day)]
   end
 
@@ -271,7 +266,7 @@ module ChineseLunar
         return '三十'
       end
 
-      two = ((day) / 10).to_i()
+      two = ((day) / 10).to_i
 
       if (two == 0)
         a = '初'
@@ -345,14 +340,14 @@ module ChineseLunar
 
     def get_term(y, n)
       msecs = ( 31556925974.7*(y-1890) + @@term_info[n]*60000  ) + Time.utc(1890,1,5,16,2,31).to_i * 1000
-      Time.at(msecs / 1000).utc.day
+      Time.at(msecs / 1000).utc.to_date
     end
 
     def format_date(month, day)
-      month  = month < 10 ? '0' + month.to_s : month.to_s
-      day    = day   < 10 ? '0' + day.to_s   : day.to_s
+      month  = [month < 10 ? '0' : '', month].join
+      day    = [day   < 10 ? '0' : '', day].join
 
-      'd' + month + day
+      ['d', month, day].join
     end
 
     def days_in_lunar_year(year)
